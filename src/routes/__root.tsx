@@ -6,18 +6,25 @@ import Header from '../components/Header'
 import TanstackQueryLayout from '../integrations/tanstack-query/layout'
 
 import TanstackQueryProvider from '../integrations/tanstack-query/provider'
+import { useStore } from '@tanstack/react-store'
+import { store } from '@/lib/environment-store'
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <TanstackQueryProvider>
-        <Header />
-
-        <Outlet />
-        <TanStackRouterDevtools />
-
-        <TanstackQueryLayout />
-      </TanstackQueryProvider>
-    </>
-  ),
+    component: RootComponent
 })
+
+function RootComponent() {
+    const env = useStore(store, (state) => state.environment)
+
+    return (
+        <>
+            <TanstackQueryProvider>
+                <Header />
+
+                <Outlet />
+                {env === 'development' && <TanStackRouterDevtools />}
+                {env === 'development' && <TanstackQueryLayout />}
+            </TanstackQueryProvider>
+        </>
+    )
+}
