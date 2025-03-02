@@ -2,11 +2,20 @@ import FieldInfo from "@/components/FieldInfo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { loginPost } from "@/lib/api/auth";
+import { loginStore } from "@/lib/login-store";
 import { useForm } from "@tanstack/react-form";
-import { createFileRoute } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/login")({
     component: RouteComponent,
+    validateSearch: (query) => {
+        return {
+            redirect: query.redirect ? query.redirect : "/",
+        }
+
+    }
 });
 
 function RouteComponent() {
@@ -15,10 +24,26 @@ function RouteComponent() {
             email: "",
             password: "",
         },
-        onSubmit: async ({ value }) => {
-            console.log(value);
+        onSubmit: ({ value }) => {
+            mutate(value)
         },
     });
+    const navigate = useNavigate()
+    const ref = Route.useSearch()
+
+    const { mutate, isError, error } = useMutation({
+        mutationFn: async ({ email, password }: { email: string, password: string }) => {
+            const res = await loginPost(email, password)
+
+            loginStore.setState((state) => ({ ...state, token: res.token }))
+            navigate({
+                // @ts-expect-error it will always be a valid route
+                to: ref.redirect
+            })
+        },
+    })
+
+
 
     return (
         <div className="flex h-screen justify-center items-center">
@@ -34,6 +59,7 @@ function RouteComponent() {
                         loginForm.handleSubmit();
                     }}
                 >
+                    {isError && <p className="text-destructive self-start">{error.message}</p>}
                     <loginForm.Field
                         name="email"
                         validators={{
