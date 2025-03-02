@@ -1,3 +1,5 @@
+import FieldInfo from "@/components/FieldInfo";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "@tanstack/react-form";
@@ -36,9 +38,7 @@ function RouteComponent() {
                         name="email"
                         validators={{
                             onChange: ({ value }) =>
-                                !value
-                                    ? 'Email is required'
-                                    : undefined,
+                                !value ? "Ingrese un email" : undefined,
                         }}
                         children={(field) => (
                             <>
@@ -50,6 +50,8 @@ function RouteComponent() {
                                     value={field.state.value}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                 />
+
+                                <FieldInfo field={field} />
                             </>
                         )}
                     />
@@ -58,9 +60,7 @@ function RouteComponent() {
                         name="password"
                         validators={{
                             onChange: ({ value }) =>
-                                !value
-                                    ? 'Password is required'
-                                    : undefined,
+                                !value ? "Ingrese una contraseña" : undefined,
                         }}
                         children={(field) => (
                             <>
@@ -72,10 +72,25 @@ function RouteComponent() {
                                     value={field.state.value}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                 />
+
+                                <FieldInfo field={field} />
                             </>
                         )}
                     />
 
+                    <loginForm.Subscribe
+                        selector={(state) => [state.canSubmit, state.isSubmitting]}
+                        children={([canSubmit, isSubmitting]) => (
+                            <Button
+                                type="submit"
+                                disabled={!canSubmit}
+                                variant="default"
+                                size="lg"
+                            >
+                                {isSubmitting ? "..." : "Login"}
+                            </Button>
+                        )}
+                    />
                 </form>
             </div>
         </div>
