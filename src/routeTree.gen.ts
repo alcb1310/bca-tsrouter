@@ -17,6 +17,9 @@ import { Route as AuthIndexImport } from './routes/_auth/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 import { Route as DemoStoreImport } from './routes/demo.store'
 import { Route as DemoFormImport } from './routes/demo.form'
+import { Route as AuthTransaccionesPresupuestoImport } from './routes/_auth/transacciones/presupuesto'
+import { Route as AuthTransaccionesFacturaImport } from './routes/_auth/transacciones/factura'
+import { Route as AuthTransaccionesCierreImport } from './routes/_auth/transacciones/cierre'
 
 // Create/Update Routes
 
@@ -53,6 +56,25 @@ const DemoFormRoute = DemoFormImport.update({
   id: '/demo/form',
   path: '/demo/form',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthTransaccionesPresupuestoRoute =
+  AuthTransaccionesPresupuestoImport.update({
+    id: '/transacciones/presupuesto',
+    path: '/transacciones/presupuesto',
+    getParentRoute: () => AuthRoute,
+  } as any)
+
+const AuthTransaccionesFacturaRoute = AuthTransaccionesFacturaImport.update({
+  id: '/transacciones/factura',
+  path: '/transacciones/factura',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthTransaccionesCierreRoute = AuthTransaccionesCierreImport.update({
+  id: '/transacciones/cierre',
+  path: '/transacciones/cierre',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -101,6 +123,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/transacciones/cierre': {
+      id: '/_auth/transacciones/cierre'
+      path: '/transacciones/cierre'
+      fullPath: '/transacciones/cierre'
+      preLoaderRoute: typeof AuthTransaccionesCierreImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/transacciones/factura': {
+      id: '/_auth/transacciones/factura'
+      path: '/transacciones/factura'
+      fullPath: '/transacciones/factura'
+      preLoaderRoute: typeof AuthTransaccionesFacturaImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/transacciones/presupuesto': {
+      id: '/_auth/transacciones/presupuesto'
+      path: '/transacciones/presupuesto'
+      fullPath: '/transacciones/presupuesto'
+      preLoaderRoute: typeof AuthTransaccionesPresupuestoImport
+      parentRoute: typeof AuthImport
+    }
   }
 }
 
@@ -108,10 +151,16 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthIndexRoute: typeof AuthIndexRoute
+  AuthTransaccionesCierreRoute: typeof AuthTransaccionesCierreRoute
+  AuthTransaccionesFacturaRoute: typeof AuthTransaccionesFacturaRoute
+  AuthTransaccionesPresupuestoRoute: typeof AuthTransaccionesPresupuestoRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
+  AuthTransaccionesCierreRoute: AuthTransaccionesCierreRoute,
+  AuthTransaccionesFacturaRoute: AuthTransaccionesFacturaRoute,
+  AuthTransaccionesPresupuestoRoute: AuthTransaccionesPresupuestoRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -123,6 +172,9 @@ export interface FileRoutesByFullPath {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthIndexRoute
+  '/transacciones/cierre': typeof AuthTransaccionesCierreRoute
+  '/transacciones/factura': typeof AuthTransaccionesFacturaRoute
+  '/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
 }
 
 export interface FileRoutesByTo {
@@ -131,6 +183,9 @@ export interface FileRoutesByTo {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthIndexRoute
+  '/transacciones/cierre': typeof AuthTransaccionesCierreRoute
+  '/transacciones/factura': typeof AuthTransaccionesFacturaRoute
+  '/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
 }
 
 export interface FileRoutesById {
@@ -141,6 +196,9 @@ export interface FileRoutesById {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_auth/': typeof AuthIndexRoute
+  '/_auth/transacciones/cierre': typeof AuthTransaccionesCierreRoute
+  '/_auth/transacciones/factura': typeof AuthTransaccionesFacturaRoute
+  '/_auth/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
 }
 
 export interface FileRouteTypes {
@@ -152,8 +210,19 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/'
+    | '/transacciones/cierre'
+    | '/transacciones/factura'
+    | '/transacciones/presupuesto'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/demo/form' | '/demo/store' | '/demo/tanstack-query' | '/'
+  to:
+    | '/login'
+    | '/demo/form'
+    | '/demo/store'
+    | '/demo/tanstack-query'
+    | '/'
+    | '/transacciones/cierre'
+    | '/transacciones/factura'
+    | '/transacciones/presupuesto'
   id:
     | '__root__'
     | '/_auth'
@@ -162,6 +231,9 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/_auth/'
+    | '/_auth/transacciones/cierre'
+    | '/_auth/transacciones/factura'
+    | '/_auth/transacciones/presupuesto'
   fileRoutesById: FileRoutesById
 }
 
@@ -201,7 +273,10 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/"
+        "/_auth/",
+        "/_auth/transacciones/cierre",
+        "/_auth/transacciones/factura",
+        "/_auth/transacciones/presupuesto"
       ]
     },
     "/login": {
@@ -218,6 +293,18 @@ export const routeTree = rootRoute
     },
     "/_auth/": {
       "filePath": "_auth/index.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/transacciones/cierre": {
+      "filePath": "_auth/transacciones/cierre.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/transacciones/factura": {
+      "filePath": "_auth/transacciones/factura.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/transacciones/presupuesto": {
+      "filePath": "_auth/transacciones/presupuesto.tsx",
       "parent": "/_auth"
     }
   }
