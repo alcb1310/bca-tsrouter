@@ -20,6 +20,10 @@ import { Route as DemoFormImport } from './routes/demo.form'
 import { Route as AuthTransaccionesPresupuestoImport } from './routes/_auth/transacciones/presupuesto'
 import { Route as AuthTransaccionesFacturaImport } from './routes/_auth/transacciones/factura'
 import { Route as AuthTransaccionesCierreImport } from './routes/_auth/transacciones/cierre'
+import { Route as AuthReportesHistoricoImport } from './routes/_auth/reportes/historico'
+import { Route as AuthReportesGastadoPorPartidaImport } from './routes/_auth/reportes/gastado-por-partida'
+import { Route as AuthReportesCuadreImport } from './routes/_auth/reportes/cuadre'
+import { Route as AuthReportesActualImport } from './routes/_auth/reportes/actual'
 
 // Create/Update Routes
 
@@ -77,6 +81,31 @@ const AuthTransaccionesCierreRoute = AuthTransaccionesCierreImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthReportesHistoricoRoute = AuthReportesHistoricoImport.update({
+  id: '/reportes/historico',
+  path: '/reportes/historico',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthReportesGastadoPorPartidaRoute =
+  AuthReportesGastadoPorPartidaImport.update({
+    id: '/reportes/gastado-por-partida',
+    path: '/reportes/gastado-por-partida',
+    getParentRoute: () => AuthRoute,
+  } as any)
+
+const AuthReportesCuadreRoute = AuthReportesCuadreImport.update({
+  id: '/reportes/cuadre',
+  path: '/reportes/cuadre',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthReportesActualRoute = AuthReportesActualImport.update({
+  id: '/reportes/actual',
+  path: '/reportes/actual',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -123,6 +152,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/reportes/actual': {
+      id: '/_auth/reportes/actual'
+      path: '/reportes/actual'
+      fullPath: '/reportes/actual'
+      preLoaderRoute: typeof AuthReportesActualImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/reportes/cuadre': {
+      id: '/_auth/reportes/cuadre'
+      path: '/reportes/cuadre'
+      fullPath: '/reportes/cuadre'
+      preLoaderRoute: typeof AuthReportesCuadreImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/reportes/gastado-por-partida': {
+      id: '/_auth/reportes/gastado-por-partida'
+      path: '/reportes/gastado-por-partida'
+      fullPath: '/reportes/gastado-por-partida'
+      preLoaderRoute: typeof AuthReportesGastadoPorPartidaImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/reportes/historico': {
+      id: '/_auth/reportes/historico'
+      path: '/reportes/historico'
+      fullPath: '/reportes/historico'
+      preLoaderRoute: typeof AuthReportesHistoricoImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/transacciones/cierre': {
       id: '/_auth/transacciones/cierre'
       path: '/transacciones/cierre'
@@ -151,6 +208,10 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthIndexRoute: typeof AuthIndexRoute
+  AuthReportesActualRoute: typeof AuthReportesActualRoute
+  AuthReportesCuadreRoute: typeof AuthReportesCuadreRoute
+  AuthReportesGastadoPorPartidaRoute: typeof AuthReportesGastadoPorPartidaRoute
+  AuthReportesHistoricoRoute: typeof AuthReportesHistoricoRoute
   AuthTransaccionesCierreRoute: typeof AuthTransaccionesCierreRoute
   AuthTransaccionesFacturaRoute: typeof AuthTransaccionesFacturaRoute
   AuthTransaccionesPresupuestoRoute: typeof AuthTransaccionesPresupuestoRoute
@@ -158,6 +219,10 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
+  AuthReportesActualRoute: AuthReportesActualRoute,
+  AuthReportesCuadreRoute: AuthReportesCuadreRoute,
+  AuthReportesGastadoPorPartidaRoute: AuthReportesGastadoPorPartidaRoute,
+  AuthReportesHistoricoRoute: AuthReportesHistoricoRoute,
   AuthTransaccionesCierreRoute: AuthTransaccionesCierreRoute,
   AuthTransaccionesFacturaRoute: AuthTransaccionesFacturaRoute,
   AuthTransaccionesPresupuestoRoute: AuthTransaccionesPresupuestoRoute,
@@ -172,6 +237,10 @@ export interface FileRoutesByFullPath {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthIndexRoute
+  '/reportes/actual': typeof AuthReportesActualRoute
+  '/reportes/cuadre': typeof AuthReportesCuadreRoute
+  '/reportes/gastado-por-partida': typeof AuthReportesGastadoPorPartidaRoute
+  '/reportes/historico': typeof AuthReportesHistoricoRoute
   '/transacciones/cierre': typeof AuthTransaccionesCierreRoute
   '/transacciones/factura': typeof AuthTransaccionesFacturaRoute
   '/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
@@ -183,6 +252,10 @@ export interface FileRoutesByTo {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthIndexRoute
+  '/reportes/actual': typeof AuthReportesActualRoute
+  '/reportes/cuadre': typeof AuthReportesCuadreRoute
+  '/reportes/gastado-por-partida': typeof AuthReportesGastadoPorPartidaRoute
+  '/reportes/historico': typeof AuthReportesHistoricoRoute
   '/transacciones/cierre': typeof AuthTransaccionesCierreRoute
   '/transacciones/factura': typeof AuthTransaccionesFacturaRoute
   '/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
@@ -196,6 +269,10 @@ export interface FileRoutesById {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_auth/': typeof AuthIndexRoute
+  '/_auth/reportes/actual': typeof AuthReportesActualRoute
+  '/_auth/reportes/cuadre': typeof AuthReportesCuadreRoute
+  '/_auth/reportes/gastado-por-partida': typeof AuthReportesGastadoPorPartidaRoute
+  '/_auth/reportes/historico': typeof AuthReportesHistoricoRoute
   '/_auth/transacciones/cierre': typeof AuthTransaccionesCierreRoute
   '/_auth/transacciones/factura': typeof AuthTransaccionesFacturaRoute
   '/_auth/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
@@ -210,6 +287,10 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/'
+    | '/reportes/actual'
+    | '/reportes/cuadre'
+    | '/reportes/gastado-por-partida'
+    | '/reportes/historico'
     | '/transacciones/cierre'
     | '/transacciones/factura'
     | '/transacciones/presupuesto'
@@ -220,6 +301,10 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/'
+    | '/reportes/actual'
+    | '/reportes/cuadre'
+    | '/reportes/gastado-por-partida'
+    | '/reportes/historico'
     | '/transacciones/cierre'
     | '/transacciones/factura'
     | '/transacciones/presupuesto'
@@ -231,6 +316,10 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/_auth/'
+    | '/_auth/reportes/actual'
+    | '/_auth/reportes/cuadre'
+    | '/_auth/reportes/gastado-por-partida'
+    | '/_auth/reportes/historico'
     | '/_auth/transacciones/cierre'
     | '/_auth/transacciones/factura'
     | '/_auth/transacciones/presupuesto'
@@ -274,6 +363,10 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/",
+        "/_auth/reportes/actual",
+        "/_auth/reportes/cuadre",
+        "/_auth/reportes/gastado-por-partida",
+        "/_auth/reportes/historico",
         "/_auth/transacciones/cierre",
         "/_auth/transacciones/factura",
         "/_auth/transacciones/presupuesto"
@@ -293,6 +386,22 @@ export const routeTree = rootRoute
     },
     "/_auth/": {
       "filePath": "_auth/index.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/reportes/actual": {
+      "filePath": "_auth/reportes/actual.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/reportes/cuadre": {
+      "filePath": "_auth/reportes/cuadre.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/reportes/gastado-por-partida": {
+      "filePath": "_auth/reportes/gastado-por-partida.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/reportes/historico": {
+      "filePath": "_auth/reportes/historico.tsx",
       "parent": "/_auth"
     },
     "/_auth/transacciones/cierre": {
