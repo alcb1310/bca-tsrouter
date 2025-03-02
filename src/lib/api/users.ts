@@ -11,5 +11,10 @@ export async function meGet() {
         }
     });
 
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(JSON.stringify(error.error));
+    }
+
     return await res.json();
 }

@@ -5,11 +5,15 @@ export const Route = createFileRoute("/_auth/")({
     component: App,
     loader: async ({ context: { queryClient } }) => {
         const data = await queryClient.ensureQueryData({
-            queryKey: ["me"],
+            queryKey: ["users", "me"],
             queryFn: () => meGet(),
         });
 
         return data;
+    },
+    errorComponent: (error) => {
+        console.error(error);
+        return <p className="uppercase text-destructive font-extrabold tracking-wider">Error </p>
     },
 });
 
