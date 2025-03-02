@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { isAuthenticated } from "@/lib/auth";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
+import Topbar from "@/components/Topbar";
 
 export const Route = createFileRoute("/_auth")({
     component: RouteComponent,
@@ -22,7 +23,9 @@ function RouteComponent() {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main>
+            <main className="flex grow flex-col">
+                <Topbar />
+
                 <Outlet />
             </main>
         </SidebarProvider>
