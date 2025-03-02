@@ -1,3 +1,4 @@
+import PageTitle from "@/components/PageTitle";
 import { meGet } from "@/lib/api/users";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -20,9 +21,7 @@ function RouteComponent() {
 
     return (
         <>
-            <h2 className="mb-3 text-xl font-semibold tracking-wide">
-                Perfil de {user.name}
-            </h2>
+            <PageTitle title={`Perfil de ${user.name}`} />
 
             <p>
                 <span className="text-success">Nombre:</span> {user.name}
