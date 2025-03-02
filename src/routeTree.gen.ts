@@ -17,6 +17,8 @@ import { Route as AuthIndexImport } from './routes/_auth/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 import { Route as DemoStoreImport } from './routes/demo.store'
 import { Route as DemoFormImport } from './routes/demo.form'
+import { Route as AuthUsuariosPerfilImport } from './routes/_auth/usuarios/perfil'
+import { Route as AuthUsuariosAdministrarImport } from './routes/_auth/usuarios/administrar'
 import { Route as AuthTransaccionesPresupuestoImport } from './routes/_auth/transacciones/presupuesto'
 import { Route as AuthTransaccionesFacturaImport } from './routes/_auth/transacciones/factura'
 import { Route as AuthTransaccionesCierreImport } from './routes/_auth/transacciones/cierre'
@@ -66,6 +68,18 @@ const DemoFormRoute = DemoFormImport.update({
   id: '/demo/form',
   path: '/demo/form',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthUsuariosPerfilRoute = AuthUsuariosPerfilImport.update({
+  id: '/usuarios/perfil',
+  path: '/usuarios/perfil',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthUsuariosAdministrarRoute = AuthUsuariosAdministrarImport.update({
+  id: '/usuarios/administrar',
+  path: '/usuarios/administrar',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 const AuthTransaccionesPresupuestoRoute =
@@ -285,6 +299,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthTransaccionesPresupuestoImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/usuarios/administrar': {
+      id: '/_auth/usuarios/administrar'
+      path: '/usuarios/administrar'
+      fullPath: '/usuarios/administrar'
+      preLoaderRoute: typeof AuthUsuariosAdministrarImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/usuarios/perfil': {
+      id: '/_auth/usuarios/perfil'
+      path: '/usuarios/perfil'
+      fullPath: '/usuarios/perfil'
+      preLoaderRoute: typeof AuthUsuariosPerfilImport
+      parentRoute: typeof AuthImport
+    }
   }
 }
 
@@ -305,6 +333,8 @@ interface AuthRouteChildren {
   AuthTransaccionesCierreRoute: typeof AuthTransaccionesCierreRoute
   AuthTransaccionesFacturaRoute: typeof AuthTransaccionesFacturaRoute
   AuthTransaccionesPresupuestoRoute: typeof AuthTransaccionesPresupuestoRoute
+  AuthUsuariosAdministrarRoute: typeof AuthUsuariosAdministrarRoute
+  AuthUsuariosPerfilRoute: typeof AuthUsuariosPerfilRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
@@ -322,6 +352,8 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthTransaccionesCierreRoute: AuthTransaccionesCierreRoute,
   AuthTransaccionesFacturaRoute: AuthTransaccionesFacturaRoute,
   AuthTransaccionesPresupuestoRoute: AuthTransaccionesPresupuestoRoute,
+  AuthUsuariosAdministrarRoute: AuthUsuariosAdministrarRoute,
+  AuthUsuariosPerfilRoute: AuthUsuariosPerfilRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -346,6 +378,8 @@ export interface FileRoutesByFullPath {
   '/transacciones/cierre': typeof AuthTransaccionesCierreRoute
   '/transacciones/factura': typeof AuthTransaccionesFacturaRoute
   '/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
+  '/usuarios/administrar': typeof AuthUsuariosAdministrarRoute
+  '/usuarios/perfil': typeof AuthUsuariosPerfilRoute
 }
 
 export interface FileRoutesByTo {
@@ -367,6 +401,8 @@ export interface FileRoutesByTo {
   '/transacciones/cierre': typeof AuthTransaccionesCierreRoute
   '/transacciones/factura': typeof AuthTransaccionesFacturaRoute
   '/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
+  '/usuarios/administrar': typeof AuthUsuariosAdministrarRoute
+  '/usuarios/perfil': typeof AuthUsuariosPerfilRoute
 }
 
 export interface FileRoutesById {
@@ -390,6 +426,8 @@ export interface FileRoutesById {
   '/_auth/transacciones/cierre': typeof AuthTransaccionesCierreRoute
   '/_auth/transacciones/factura': typeof AuthTransaccionesFacturaRoute
   '/_auth/transacciones/presupuesto': typeof AuthTransaccionesPresupuestoRoute
+  '/_auth/usuarios/administrar': typeof AuthUsuariosAdministrarRoute
+  '/_auth/usuarios/perfil': typeof AuthUsuariosPerfilRoute
 }
 
 export interface FileRouteTypes {
@@ -414,6 +452,8 @@ export interface FileRouteTypes {
     | '/transacciones/cierre'
     | '/transacciones/factura'
     | '/transacciones/presupuesto'
+    | '/usuarios/administrar'
+    | '/usuarios/perfil'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -434,6 +474,8 @@ export interface FileRouteTypes {
     | '/transacciones/cierre'
     | '/transacciones/factura'
     | '/transacciones/presupuesto'
+    | '/usuarios/administrar'
+    | '/usuarios/perfil'
   id:
     | '__root__'
     | '/_auth'
@@ -455,6 +497,8 @@ export interface FileRouteTypes {
     | '/_auth/transacciones/cierre'
     | '/_auth/transacciones/factura'
     | '/_auth/transacciones/presupuesto'
+    | '/_auth/usuarios/administrar'
+    | '/_auth/usuarios/perfil'
   fileRoutesById: FileRoutesById
 }
 
@@ -507,7 +551,9 @@ export const routeTree = rootRoute
         "/_auth/reportes/historico",
         "/_auth/transacciones/cierre",
         "/_auth/transacciones/factura",
-        "/_auth/transacciones/presupuesto"
+        "/_auth/transacciones/presupuesto",
+        "/_auth/usuarios/administrar",
+        "/_auth/usuarios/perfil"
       ]
     },
     "/login": {
@@ -576,6 +622,14 @@ export const routeTree = rootRoute
     },
     "/_auth/transacciones/presupuesto": {
       "filePath": "_auth/transacciones/presupuesto.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/usuarios/administrar": {
+      "filePath": "_auth/usuarios/administrar.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/usuarios/perfil": {
+      "filePath": "_auth/usuarios/perfil.tsx",
       "parent": "/_auth"
     }
   }

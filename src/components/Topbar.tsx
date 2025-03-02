@@ -1,6 +1,7 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { LogOutIcon, UserCircleIcon } from "lucide-react";
 import { logout } from "@/lib/auth";
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "./ui/menubar";
 
 export default function Topbar() {
     const router = useRouter()
@@ -16,10 +17,33 @@ export default function Topbar() {
                 <Link to="/">Sistema Control Presupuestario</Link>
             </h1>
 
-            <div className="flex gap-3">
-                <UserCircleIcon size={22} />
-                <LogOutIcon size={22} onClick={handleLogout} />
-            </div>
+            <Menubar className="flex gap-3 bg-primary">
+                <MenubarMenu>
+                    <MenubarTrigger>
+                        <UserCircleIcon size={22} />
+                    </MenubarTrigger>
+
+                    <MenubarContent>
+                        <MenubarItem>
+                            <Link to="/usuarios/perfil">
+                                Perfil
+                            </Link>
+                        </MenubarItem>
+                        <MenubarItem>
+                            <Link to="/usuarios/administrar">
+                                Administrar
+                            </Link>
+                        </MenubarItem>
+                        <MenubarItem>Cambiar contraseña</MenubarItem>
+                    </MenubarContent>
+                </MenubarMenu>
+
+                <MenubarMenu>
+                    <MenubarTrigger onClick={handleLogout}>
+                        <LogOutIcon size={22} />
+                    </MenubarTrigger>
+                </MenubarMenu>
+            </Menubar>
         </div>
     )
 }
