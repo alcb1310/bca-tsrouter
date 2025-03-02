@@ -1,4 +1,5 @@
 import { loginStore } from "../login-store";
+import { type UserResponse } from "@/types/users";
 
 const server = import.meta.env.VITE_SERVER;
 
@@ -16,5 +17,5 @@ export async function meGet() {
         throw new Error(JSON.stringify(error.error));
     }
 
-    return await res.json();
+    return await res.json() as UserResponse;
 }
