@@ -12,7 +12,9 @@ export default function AppSidebar() {
                 <Reportes />
             </SidebarContent>
 
-            <SidebarFooter />
+            <SidebarFooter>
+                <p className="text-sm text-muted-foreground">Copyright &copy; 2025 Andres Court</p>
+            </SidebarFooter>
         </Sidebar>
     )
 }
