@@ -6,6 +6,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "./ui/side
 
 export default function AppSidebar() {
     const date = new Date();
+
     return (
         <Sidebar>
             <SidebarHeader className="flex justify-center items-center mb-2">
@@ -21,7 +22,7 @@ export default function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-center text-xs text-muted-foreground">
                     Copyright &copy; {date.getFullYear()} Andres Court
                 </p>
             </SidebarFooter>

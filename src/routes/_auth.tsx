@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_auth")({
     component: RouteComponent,
     beforeLoad: async ({ location }) => {
         if (!isAuthenticated()) {
-            // NOTE: NEVER use the redirect in the __root component
+            // NOTE: NEVER use the redirect in the __root component it'll cause an infinite loop
             throw redirect({
                 to: "/login",
                 search: {
@@ -26,7 +26,9 @@ function RouteComponent() {
             <main className="flex grow flex-col">
                 <Topbar />
 
-                <Outlet />
+                <div className="p-5">
+                    <Outlet />
+                </div>
             </main>
         </SidebarProvider>
     );
