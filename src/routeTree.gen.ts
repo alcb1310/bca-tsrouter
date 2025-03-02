@@ -24,6 +24,12 @@ import { Route as AuthReportesHistoricoImport } from './routes/_auth/reportes/hi
 import { Route as AuthReportesGastadoPorPartidaImport } from './routes/_auth/reportes/gastado-por-partida'
 import { Route as AuthReportesCuadreImport } from './routes/_auth/reportes/cuadre'
 import { Route as AuthReportesActualImport } from './routes/_auth/reportes/actual'
+import { Route as AuthParametrosRubrosImport } from './routes/_auth/parametros/rubros'
+import { Route as AuthParametrosProyetosImport } from './routes/_auth/parametros/proyetos'
+import { Route as AuthParametrosProveedoresImport } from './routes/_auth/parametros/proveedores'
+import { Route as AuthParametrosPartidasImport } from './routes/_auth/parametros/partidas'
+import { Route as AuthParametrosMaterialesImport } from './routes/_auth/parametros/materiales'
+import { Route as AuthParametrosCategoriasImport } from './routes/_auth/parametros/categorias'
 
 // Create/Update Routes
 
@@ -106,6 +112,42 @@ const AuthReportesActualRoute = AuthReportesActualImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthParametrosRubrosRoute = AuthParametrosRubrosImport.update({
+  id: '/parametros/rubros',
+  path: '/parametros/rubros',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthParametrosProyetosRoute = AuthParametrosProyetosImport.update({
+  id: '/parametros/proyetos',
+  path: '/parametros/proyetos',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthParametrosProveedoresRoute = AuthParametrosProveedoresImport.update({
+  id: '/parametros/proveedores',
+  path: '/parametros/proveedores',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthParametrosPartidasRoute = AuthParametrosPartidasImport.update({
+  id: '/parametros/partidas',
+  path: '/parametros/partidas',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthParametrosMaterialesRoute = AuthParametrosMaterialesImport.update({
+  id: '/parametros/materiales',
+  path: '/parametros/materiales',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthParametrosCategoriasRoute = AuthParametrosCategoriasImport.update({
+  id: '/parametros/categorias',
+  path: '/parametros/categorias',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -150,6 +192,48 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthIndexImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/parametros/categorias': {
+      id: '/_auth/parametros/categorias'
+      path: '/parametros/categorias'
+      fullPath: '/parametros/categorias'
+      preLoaderRoute: typeof AuthParametrosCategoriasImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/parametros/materiales': {
+      id: '/_auth/parametros/materiales'
+      path: '/parametros/materiales'
+      fullPath: '/parametros/materiales'
+      preLoaderRoute: typeof AuthParametrosMaterialesImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/parametros/partidas': {
+      id: '/_auth/parametros/partidas'
+      path: '/parametros/partidas'
+      fullPath: '/parametros/partidas'
+      preLoaderRoute: typeof AuthParametrosPartidasImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/parametros/proveedores': {
+      id: '/_auth/parametros/proveedores'
+      path: '/parametros/proveedores'
+      fullPath: '/parametros/proveedores'
+      preLoaderRoute: typeof AuthParametrosProveedoresImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/parametros/proyetos': {
+      id: '/_auth/parametros/proyetos'
+      path: '/parametros/proyetos'
+      fullPath: '/parametros/proyetos'
+      preLoaderRoute: typeof AuthParametrosProyetosImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/parametros/rubros': {
+      id: '/_auth/parametros/rubros'
+      path: '/parametros/rubros'
+      fullPath: '/parametros/rubros'
+      preLoaderRoute: typeof AuthParametrosRubrosImport
       parentRoute: typeof AuthImport
     }
     '/_auth/reportes/actual': {
@@ -208,6 +292,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthIndexRoute: typeof AuthIndexRoute
+  AuthParametrosCategoriasRoute: typeof AuthParametrosCategoriasRoute
+  AuthParametrosMaterialesRoute: typeof AuthParametrosMaterialesRoute
+  AuthParametrosPartidasRoute: typeof AuthParametrosPartidasRoute
+  AuthParametrosProveedoresRoute: typeof AuthParametrosProveedoresRoute
+  AuthParametrosProyetosRoute: typeof AuthParametrosProyetosRoute
+  AuthParametrosRubrosRoute: typeof AuthParametrosRubrosRoute
   AuthReportesActualRoute: typeof AuthReportesActualRoute
   AuthReportesCuadreRoute: typeof AuthReportesCuadreRoute
   AuthReportesGastadoPorPartidaRoute: typeof AuthReportesGastadoPorPartidaRoute
@@ -219,6 +309,12 @@ interface AuthRouteChildren {
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
+  AuthParametrosCategoriasRoute: AuthParametrosCategoriasRoute,
+  AuthParametrosMaterialesRoute: AuthParametrosMaterialesRoute,
+  AuthParametrosPartidasRoute: AuthParametrosPartidasRoute,
+  AuthParametrosProveedoresRoute: AuthParametrosProveedoresRoute,
+  AuthParametrosProyetosRoute: AuthParametrosProyetosRoute,
+  AuthParametrosRubrosRoute: AuthParametrosRubrosRoute,
   AuthReportesActualRoute: AuthReportesActualRoute,
   AuthReportesCuadreRoute: AuthReportesCuadreRoute,
   AuthReportesGastadoPorPartidaRoute: AuthReportesGastadoPorPartidaRoute,
@@ -237,6 +333,12 @@ export interface FileRoutesByFullPath {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthIndexRoute
+  '/parametros/categorias': typeof AuthParametrosCategoriasRoute
+  '/parametros/materiales': typeof AuthParametrosMaterialesRoute
+  '/parametros/partidas': typeof AuthParametrosPartidasRoute
+  '/parametros/proveedores': typeof AuthParametrosProveedoresRoute
+  '/parametros/proyetos': typeof AuthParametrosProyetosRoute
+  '/parametros/rubros': typeof AuthParametrosRubrosRoute
   '/reportes/actual': typeof AuthReportesActualRoute
   '/reportes/cuadre': typeof AuthReportesCuadreRoute
   '/reportes/gastado-por-partida': typeof AuthReportesGastadoPorPartidaRoute
@@ -252,6 +354,12 @@ export interface FileRoutesByTo {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthIndexRoute
+  '/parametros/categorias': typeof AuthParametrosCategoriasRoute
+  '/parametros/materiales': typeof AuthParametrosMaterialesRoute
+  '/parametros/partidas': typeof AuthParametrosPartidasRoute
+  '/parametros/proveedores': typeof AuthParametrosProveedoresRoute
+  '/parametros/proyetos': typeof AuthParametrosProyetosRoute
+  '/parametros/rubros': typeof AuthParametrosRubrosRoute
   '/reportes/actual': typeof AuthReportesActualRoute
   '/reportes/cuadre': typeof AuthReportesCuadreRoute
   '/reportes/gastado-por-partida': typeof AuthReportesGastadoPorPartidaRoute
@@ -269,6 +377,12 @@ export interface FileRoutesById {
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_auth/': typeof AuthIndexRoute
+  '/_auth/parametros/categorias': typeof AuthParametrosCategoriasRoute
+  '/_auth/parametros/materiales': typeof AuthParametrosMaterialesRoute
+  '/_auth/parametros/partidas': typeof AuthParametrosPartidasRoute
+  '/_auth/parametros/proveedores': typeof AuthParametrosProveedoresRoute
+  '/_auth/parametros/proyetos': typeof AuthParametrosProyetosRoute
+  '/_auth/parametros/rubros': typeof AuthParametrosRubrosRoute
   '/_auth/reportes/actual': typeof AuthReportesActualRoute
   '/_auth/reportes/cuadre': typeof AuthReportesCuadreRoute
   '/_auth/reportes/gastado-por-partida': typeof AuthReportesGastadoPorPartidaRoute
@@ -287,6 +401,12 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/'
+    | '/parametros/categorias'
+    | '/parametros/materiales'
+    | '/parametros/partidas'
+    | '/parametros/proveedores'
+    | '/parametros/proyetos'
+    | '/parametros/rubros'
     | '/reportes/actual'
     | '/reportes/cuadre'
     | '/reportes/gastado-por-partida'
@@ -301,6 +421,12 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/'
+    | '/parametros/categorias'
+    | '/parametros/materiales'
+    | '/parametros/partidas'
+    | '/parametros/proveedores'
+    | '/parametros/proyetos'
+    | '/parametros/rubros'
     | '/reportes/actual'
     | '/reportes/cuadre'
     | '/reportes/gastado-por-partida'
@@ -316,6 +442,12 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/_auth/'
+    | '/_auth/parametros/categorias'
+    | '/_auth/parametros/materiales'
+    | '/_auth/parametros/partidas'
+    | '/_auth/parametros/proveedores'
+    | '/_auth/parametros/proyetos'
+    | '/_auth/parametros/rubros'
     | '/_auth/reportes/actual'
     | '/_auth/reportes/cuadre'
     | '/_auth/reportes/gastado-por-partida'
@@ -363,6 +495,12 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/",
+        "/_auth/parametros/categorias",
+        "/_auth/parametros/materiales",
+        "/_auth/parametros/partidas",
+        "/_auth/parametros/proveedores",
+        "/_auth/parametros/proyetos",
+        "/_auth/parametros/rubros",
         "/_auth/reportes/actual",
         "/_auth/reportes/cuadre",
         "/_auth/reportes/gastado-por-partida",
@@ -386,6 +524,30 @@ export const routeTree = rootRoute
     },
     "/_auth/": {
       "filePath": "_auth/index.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/parametros/categorias": {
+      "filePath": "_auth/parametros/categorias.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/parametros/materiales": {
+      "filePath": "_auth/parametros/materiales.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/parametros/partidas": {
+      "filePath": "_auth/parametros/partidas.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/parametros/proveedores": {
+      "filePath": "_auth/parametros/proveedores.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/parametros/proyetos": {
+      "filePath": "_auth/parametros/proyetos.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/parametros/rubros": {
+      "filePath": "_auth/parametros/rubros.tsx",
       "parent": "/_auth"
     },
     "/_auth/reportes/actual": {
