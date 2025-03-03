@@ -18,7 +18,7 @@ type UserFormProps = {
 
 export default function UserForm({ user }: UserFormProps) {
     const isError = false;
-    const userForm = useForm({
+    const { reset, handleSubmit, Field, Subscribe } = useForm({
         defaultValues: {
             email: user ? user.email : "",
             name: user ? user.name : "",
@@ -26,6 +26,15 @@ export default function UserForm({ user }: UserFormProps) {
         },
         onSubmit: ({ value }) => {
             console.log(value)
+            if (user) {
+                // update user
+                console.log("update user")
+                reset();
+                return
+            }
+
+            console.log("create user")
+            reset();
         }
     })
 
@@ -40,11 +49,10 @@ export default function UserForm({ user }: UserFormProps) {
             <form onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("submit")
-                userForm.handleSubmit();
+                handleSubmit();
             }}>
                 <div className="p-5 flex flex-col gap-4">
-                    <userForm.Field
+                    <Field
                         name="email"
                         children={(field) => (
                             <div>
@@ -65,7 +73,7 @@ export default function UserForm({ user }: UserFormProps) {
                         )}
                     />
 
-                    <userForm.Field
+                    <Field
                         name="name"
                         children={(field) => (
                             <div>
@@ -87,7 +95,7 @@ export default function UserForm({ user }: UserFormProps) {
                     />
 
                     {
-                        !user && <userForm.Field
+                        !user && <Field
                             name="password"
                             children={(field) => (
                                 <div>
@@ -111,7 +119,7 @@ export default function UserForm({ user }: UserFormProps) {
 
                 <DrawerFooter>
                     <div className="flex justify-around gap-2">
-                        <userForm.Subscribe
+                        <Subscribe
                             selector={(state) => [state.canSubmit, state.isSubmitting]}
                             children={([canSubmit, isSubmitting]) => (
                                 <Button
