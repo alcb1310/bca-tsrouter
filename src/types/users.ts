@@ -4,3 +4,9 @@ export type UserResponse = {
     email: string
     company_id: string
 }
+
+export type UserCreate = {
+    name: string
+    email: string
+    password: string
+}
