@@ -23,10 +23,10 @@ function RouteComponent() {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main className="flex grow flex-col">
+            <main className="flex grow flex-col h-screen">
                 <Topbar />
 
-                <div className="p-5">
+                <div className="flex grow p-5">
                     <Outlet />
                 </div>
             </main>
