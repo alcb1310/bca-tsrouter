@@ -1,4 +1,7 @@
-import type { UserResponse } from "@/types/users";
+import { useForm } from "@tanstack/react-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import type { UserCreate, UserResponse } from "@/types/users";
 import { Button } from "../ui/button";
 import {
     DrawerClose,
@@ -7,17 +10,25 @@ import {
     DrawerHeader,
     DrawerTitle,
 } from "../ui/drawer";
-import { useForm } from "@tanstack/react-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import FieldInfo from "../FieldInfo";
+import { createUser } from "@/lib/api/users";
 
 type UserFormProps = {
     user: UserResponse | null;
 };
 
 export default function UserForm({ user }: UserFormProps) {
-    const isError = false;
+    const queryClient = useQueryClient();
+
+    const { mutate: create, isError: isCreateError } = useMutation({
+        mutationFn: async (data: UserCreate) => await createUser(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["users"] });
+        }
+    })
+
     const { reset, handleSubmit, Field, Subscribe } = useForm({
         defaultValues: {
             email: user ? user.email : "",
@@ -33,7 +44,7 @@ export default function UserForm({ user }: UserFormProps) {
                 return
             }
 
-            console.log("create user")
+            create(value)
             reset();
         }
     })
@@ -65,7 +76,7 @@ export default function UserForm({ user }: UserFormProps) {
                                     value={field.state.value}
                                     placeholder="Email"
                                     onChange={(e) => field.handleChange(e.target.value)}
-                                    className={isError || (field.state.meta.isTouched && field.state.meta.errors.length) ? "border-destructive" : ""}
+                                    className={isCreateError || (field.state.meta.isTouched && field.state.meta.errors.length) ? "border-destructive" : ""}
                                 />
 
                                 <FieldInfo field={field} />

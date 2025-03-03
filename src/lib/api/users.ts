@@ -1,5 +1,5 @@
 import { loginStore } from "../login-store";
-import { type UserResponse } from "@/types/users";
+import { type UserCreate, type UserResponse } from "@/types/users";
 
 const server = import.meta.env.VITE_SERVER;
 
@@ -54,3 +54,21 @@ export async function deleteUser(id: string) {
     // NOTE: Return null from the query function when receiving a 204
     return null
 }
+
+export async function createUser(user: UserCreate) {
+    const res = await fetch(`${server}/users`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${loginStore.state.token}`,
+        },
+        body: JSON.stringify(user),
+    });
+
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(JSON.stringify(error.error));
+    }
+
+    return await res.json() as UserResponse;
+} 
