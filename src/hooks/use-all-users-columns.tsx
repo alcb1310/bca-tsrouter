@@ -5,7 +5,9 @@ import CellActions from "@/components/DataTable/CellActions";
 import DeleteUser from "@/components/users/DeleteUser";
 import EditUser from "@/components/users/EditUser";
 
-export default function useAllUsersColumns(): ColumnDef<UserResponse>[] {
+export default function useAllUsersColumns(
+    setSelectedUser: (user: UserResponse) => void
+): ColumnDef<UserResponse>[] {
     return [
         {
             accessorKey: "name",
@@ -23,8 +25,8 @@ export default function useAllUsersColumns(): ColumnDef<UserResponse>[] {
             cell: (params) => {
                 return (
                     <CellActions
-                        edit={< EditUser user={params.row.original} />}
-                        del={< DeleteUser user={params.row.original} />}
+                        edit={<EditUser user={params.row.original} setSelectedUser={() => setSelectedUser(params.row.original)} />}
+                        del={<DeleteUser user={params.row.original} />}
                     />
                 );
             },

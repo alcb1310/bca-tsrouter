@@ -1,21 +1,20 @@
 import { PencilIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import type { UserResponse } from "@/types/users";
+import { DrawerTrigger } from "../ui/drawer";
 
-export default function EditUser({ user }: { user: UserResponse }) {
-    function editFn(user: UserResponse) {
-        console.log("edit", user.id);
-    }
+type EditUserProps = {
+    user: UserResponse;
+    setSelectedUser: (user: UserResponse) => void;
+}
 
+export default function EditUser({ user, setSelectedUser }: EditUserProps) {
     return (
-        <Button
-            variant="ghost"
-            onClick={() => editFn(user)}
-            className="flex gap-2"
-        >
-            <PencilIcon size={10} />
-            Editar
-        </Button>
-    )
+        <DrawerTrigger onClick={() => setSelectedUser(user)}>
+            <div className="flex gap-2">
+                <PencilIcon size={10} />
+                Editar
+            </div>
+        </DrawerTrigger>
+    );
 }
