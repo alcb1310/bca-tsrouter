@@ -6,6 +6,7 @@ import TanstackQueryLayout from "@/integrations/tanstack-query/layout";
 import { useStore } from "@tanstack/react-store";
 import { store } from "@/lib/environment-store";
 import type { QueryClient } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createRootRouteWithContext<{
     queryClient: QueryClient
@@ -19,6 +20,7 @@ function RootComponent() {
     return (
         <>
             <Outlet />
+            <Toaster />
             {env === "development" && <TanStackRouterDevtools />}
             {env === "development" && <TanstackQueryLayout />}
         </>
