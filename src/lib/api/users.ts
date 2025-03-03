@@ -36,3 +36,21 @@ export async function getAllUsers() {
 
     return await res.json() as UserResponse[];
 }
+
+export async function deleteUser(id: string) {
+    const res = await fetch(`${server}/users/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${loginStore.state.token}`,
+        }
+    });
+
+    if (res.status !== 204) {
+        const error = await res.json();
+        throw new Error(JSON.stringify(error.error));
+    }
+
+    // NOTE: Return null from the query function when receiving a 204
+    return null
+}
