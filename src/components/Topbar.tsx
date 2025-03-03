@@ -14,7 +14,7 @@ export default function Topbar() {
     }
 
     return (
-        <div className={`h-[${TOPBAR_HEIGHT}px] flex items-center justify-between px-5 bg-primary text-primary-foreground/80`}>
+        <div className={`h-[${TOPBAR_HEIGHT}px] flex items-center justify-between px-5 py-6 bg-primary text-primary-foreground/80`}>
             <h1 className="text-2xl font-semibold">
                 <Link to="/">Sistema Control Presupuestario</Link>
             </h1>
