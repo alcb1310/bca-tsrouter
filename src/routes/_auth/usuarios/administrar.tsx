@@ -1,21 +1,11 @@
+import DataTable from "@/components/DataTable/DataTable";
 import PageTitle from "@/components/PageTitle";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getAllUsers } from "@/lib/api/users";
 import type { UserResponse } from "@/types/users";
 import { createFileRoute } from "@tanstack/react-router";
-import {
-    flexRender,
-    getCoreRowModel,
-    useReactTable,
-    type ColumnDef,
-} from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 
 export const Route = createFileRoute("/_auth/usuarios/administrar")({
     component: RouteComponent,
@@ -33,53 +23,29 @@ function RouteComponent() {
         {
             accessorKey: "name",
             header: "Nombre",
+            // NOTE: At least one column have to have an auto size for this to work
+            size: 200,
         },
         {
             accessorKey: "email",
             header: "Email",
         },
+        {
+            id: "actions",
+        }
     ];
 
-    const table = useReactTable({
-        data: users,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-    });
-
     return (
-        <>
+        <div className={`flex h-full w-full flex-col items-start`}>
             <PageTitle title="Administración de usuarios" />
-
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <TableHead key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext(),
-                                        )}
-                                </TableHead>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-
-                <TableBody>
-                    {table.getRowModel().rows.map((row) => (
-                        <TableRow key={row.id}>
-                            {row.getVisibleCells().map((cell) => (
-                                <TableCell key={cell.id}>
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </>
+            <Button variant="ghost" size="lg" className="text-primary text-base">
+                Crear usuario
+            </Button>
+            <Card className="w-1/2 flex flex-col grow">
+                <CardContent>
+                    <DataTable data={users} columns={columns} />
+                </CardContent>
+            </Card>
+        </div >
     );
 }
