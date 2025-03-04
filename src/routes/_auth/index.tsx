@@ -4,12 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/_auth/")({
     component: App,
     loader: async ({ context: { queryClient } }) => {
-        const data = await queryClient.ensureQueryData({
+        return await queryClient.ensureQueryData({
             queryKey: ["users", "me"],
             queryFn: () => meGet(),
         });
-
-        return data;
     },
     errorComponent: (error) => {
         console.error(error);
