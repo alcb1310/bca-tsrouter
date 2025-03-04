@@ -3,7 +3,13 @@ import { loginStore } from "@/lib/login-store";
 const server = import.meta.env.VITE_SERVER;
 
 export async function getAllBudgetItems({ query, accum }: { query: string, accum?: boolean }) {
-    const res = await fetch(`${server}/parametros/partidas?query=${query}&accum=${accum}`, {
+    let url = `${server}/parametros/partidas?query=${query}`
+
+    if (accum !== undefined) {
+        url += `&accum=${accum}`
+    }
+
+    const res = await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
