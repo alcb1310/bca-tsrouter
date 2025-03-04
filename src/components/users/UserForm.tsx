@@ -14,7 +14,6 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import FieldInfo from "../FieldInfo";
 import { createUser, updateUser } from "@/lib/api/users";
-import { toast } from "sonner";
 
 type UserFormProps = {
     user: UserResponse | null;
@@ -28,7 +27,7 @@ export default function UserForm({ user }: UserFormProps) {
         isError: isCreateError,
         error: createError,
     } = useMutation({
-        mutationFn: async (data: UserCreate) => await createUser(data),
+        mutationFn: (data: UserCreate) => createUser(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["users"] });
         },
@@ -38,9 +37,10 @@ export default function UserForm({ user }: UserFormProps) {
         isError: isUpdateError,
         error: updateError,
     } = useMutation({
-        mutationFn: async ({ data, id }: { data: UserCreate; id: string }) =>
-            await updateUser({ user: data, id }),
+        mutationFn: ({ data, id }: { data: UserCreate; id: string }) =>
+            updateUser({ user: data, id }),
         onSuccess: () => {
+            console.log("onSuccess")
             queryClient.invalidateQueries({ queryKey: ["users"] });
         },
     });
@@ -51,25 +51,11 @@ export default function UserForm({ user }: UserFormProps) {
             name: user ? user.name : "",
             password: "",
         },
-        onSubmit: ({ value }) => {
+        onSubmit: async (t) => {
             if (user) {
-                const res = update({ data: value, id: user.id });
-
-                // @ts-expect-error can be undefined
-                if (res) {
-                    toast.success("Usuario actualizado con éxito");
-                } else {
-                    toast.error("Error al actualizar el usuario");
-                }
+                update({ data: t.value, id: user.id });
             } else {
-                const res = create(value);
-
-                // @ts-expect-error can be undefined
-                if (res) {
-                    toast.success("Usuario creado con éxito");
-                } else {
-                    toast.error("Error al crear el usuario");
-                }
+                create(t.value);
             }
             reset()
         },
