@@ -8,8 +8,17 @@ import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo } from 'react'
 
+type PartidasSearchType = {
+    pagina?: number
+}
+
 export const Route = createFileRoute('/_auth/parametros/partidas')({
     component: RouteComponent,
+    validateSearch: (search: Record<string, unknown>): PartidasSearchType => {
+        return {
+            pagina: search.pagina ? Number(search.pagina) : undefined
+        }
+    }
 })
 
 function RouteComponent() {

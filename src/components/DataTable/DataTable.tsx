@@ -14,12 +14,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Button } from "../ui/button";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 
 interface DataTableProps<TData, TValue> {
     data: TData[];
     columns: ColumnDef<TData, TValue>[];
+    pagina?: number
 }
 
 const DEFAULT_COLUMN_WIDTH = 150;
@@ -28,10 +30,24 @@ export default function DataTable<TData, TValue>({
     data,
     columns,
 }: DataTableProps<TData, TValue>) {
+    const navigate = useNavigate({
+        // @ts-expect-error
+        from: window.location.pathname
+    })
+    const search = useSearch({
+        strict: false
+    })
+
     const [pagination, setPagination] = useState({
-        pageIndex: 0,
+        // @ts-expect-error
+        pageIndex: search?.pagina ? search.pagina - 1 : 0,
         pageSize: 15,
     })
+
+    useEffect(() => {
+        // @ts-expect-error
+        navigate({ search: { pagina: pagination.pageIndex + 1 } })
+    }, [pagination])
 
     const table = useReactTable({
         data,
