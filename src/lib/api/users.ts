@@ -71,4 +71,22 @@ export async function createUser(user: UserCreate) {
     }
 
     return await res.json() as UserResponse;
-} 
+}
+
+export async function updateUser({ user, id }: { user: UserCreate, id: string }) {
+    const res = await fetch(`${server}/users/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${loginStore.state.token}`,
+        },
+        body: JSON.stringify(user),
+    });
+
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(JSON.stringify(error.error));
+    }
+
+    return await res.json() as UserResponse;
+}

@@ -13,7 +13,8 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import FieldInfo from "../FieldInfo";
-import { createUser } from "@/lib/api/users";
+import { createUser, updateUser } from "@/lib/api/users";
+import { toast } from "sonner";
 
 type UserFormProps = {
     user: UserResponse | null;
@@ -22,33 +23,57 @@ type UserFormProps = {
 export default function UserForm({ user }: UserFormProps) {
     const queryClient = useQueryClient();
 
-    const { mutate: create, isError: isCreateError } = useMutation({
+    const {
+        mutate: create,
+        isError: isCreateError,
+        error: createError,
+    } = useMutation({
         mutationFn: async (data: UserCreate) => await createUser(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["users"] });
-        }
-    })
+        },
+    });
+    const {
+        mutate: update,
+        isError: isUpdateError,
+        error: updateError,
+    } = useMutation({
+        mutationFn: async ({ data, id }: { data: UserCreate; id: string }) =>
+            await updateUser({ user: data, id }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["users"] });
+        },
+    });
 
     const { reset, handleSubmit, Field, Subscribe } = useForm({
         defaultValues: {
             email: user ? user.email : "",
             name: user ? user.name : "",
-            password: ""
+            password: "",
         },
         onSubmit: ({ value }) => {
-            console.log(value)
             if (user) {
-                // update user
-                console.log("update user")
-                reset();
-                return
+                const res = update({ data: value, id: user.id });
+
+                // @ts-expect-error can be undefined
+                if (res) {
+                    toast.success("Usuario actualizado con éxito");
+                } else {
+                    toast.error("Error al actualizar el usuario");
+                }
+            } else {
+                const res = create(value);
+
+                // @ts-expect-error can be undefined
+                if (res) {
+                    toast.success("Usuario creado con éxito");
+                } else {
+                    toast.error("Error al crear el usuario");
+                }
             }
-
-            create(value)
-            reset();
-        }
-    })
-
+            reset()
+        },
+    });
 
     return (
         <DrawerContent>
@@ -57,12 +82,26 @@ export default function UserForm({ user }: UserFormProps) {
                     {user ? `Editar ${user.name}` : "Crear nuevo usuario"}
                 </DrawerHeader>
             </DrawerTitle>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleSubmit();
-            }}>
+
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleSubmit();
+                }}
+            >
                 <div className="p-5 flex flex-col gap-4">
+                    {isCreateError && (
+                        <p className="text-destructive">
+                            {createError.message.replace(/\"/g, "")}
+                        </p>
+                    )}
+                    {isUpdateError && (
+                        <p className="text-destructive">
+                            {updateError.message.replace(/\"/g, "")}
+                        </p>
+                    )}
+
                     <Field
                         name="email"
                         children={(field) => (
@@ -76,7 +115,14 @@ export default function UserForm({ user }: UserFormProps) {
                                     value={field.state.value}
                                     placeholder="Email"
                                     onChange={(e) => field.handleChange(e.target.value)}
-                                    className={isCreateError || (field.state.meta.isTouched && field.state.meta.errors.length) ? "border-destructive" : ""}
+                                    className={
+                                        isCreateError ||
+                                            isUpdateError ||
+                                            (field.state.meta.isTouched &&
+                                                field.state.meta.errors.length)
+                                            ? "border-destructive"
+                                            : ""
+                                    }
                                 />
 
                                 <FieldInfo field={field} />
@@ -97,7 +143,14 @@ export default function UserForm({ user }: UserFormProps) {
                                     value={field.state.value}
                                     placeholder="Nombre"
                                     onChange={(e) => field.handleChange(e.target.value)}
-                                    className={isError || (field.state.meta.isTouched && field.state.meta.errors.length) ? "border-destructive" : ""}
+                                    className={
+                                        isCreateError ||
+                                            isUpdateError ||
+                                            (field.state.meta.isTouched &&
+                                                field.state.meta.errors.length)
+                                            ? "border-destructive"
+                                            : ""
+                                    }
                                 />
 
                                 <FieldInfo field={field} />
@@ -105,8 +158,8 @@ export default function UserForm({ user }: UserFormProps) {
                         )}
                     />
 
-                    {
-                        !user && <Field
+                    {!user && (
+                        <Field
                             name="password"
                             children={(field) => (
                                 <div>
@@ -118,14 +171,21 @@ export default function UserForm({ user }: UserFormProps) {
                                         value={field.state.value}
                                         placeholder="Contraseña"
                                         onChange={(e) => field.handleChange(e.target.value)}
-                                        className={isError || (field.state.meta.isTouched && field.state.meta.errors.length) ? "border-destructive" : ""}
+                                        className={
+                                            isCreateError ||
+                                                isUpdateError ||
+                                                (field.state.meta.isTouched &&
+                                                    field.state.meta.errors.length)
+                                                ? "border-destructive"
+                                                : ""
+                                        }
                                     />
 
                                     <FieldInfo field={field} />
                                 </div>
                             )}
                         />
-                    }
+                    )}
                 </div>
 
                 <DrawerFooter>
