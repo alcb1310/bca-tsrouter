@@ -1,5 +1,5 @@
-import { Store } from "@tanstack/store";
+import { Store } from '@tanstack/store'
 
 export const loginStore = new Store({
-    token: '',
+	token: '',
 })

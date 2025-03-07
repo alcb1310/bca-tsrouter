@@ -1,5 +1,5 @@
-import { Store } from "@tanstack/store";
+import { Store } from '@tanstack/store'
 
 export const store = new Store({
-    environment: import.meta.env.VITE_ENV || "production",
-});
+	environment: import.meta.env.VITE_ENV || 'production',
+})

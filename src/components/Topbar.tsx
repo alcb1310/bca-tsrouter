@@ -1,51 +1,55 @@
-import { Link, useRouter } from "@tanstack/react-router";
-import { LogOutIcon, UserCircleIcon } from "lucide-react";
-import { logout } from "@/lib/auth";
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "./ui/menubar";
+import { logout } from '@/lib/auth'
+import { Link, useRouter } from '@tanstack/react-router'
+import { LogOutIcon, UserCircleIcon } from 'lucide-react'
+import {
+	Menubar,
+	MenubarContent,
+	MenubarItem,
+	MenubarMenu,
+	MenubarTrigger,
+} from './ui/menubar'
 
 export const TOPBAR_HEIGHT = 60
 
 export default function Topbar() {
-    const router = useRouter()
+	const router = useRouter()
 
-    function handleLogout() {
-        logout()
-        router.invalidate()
-    }
+	function handleLogout() {
+		logout()
+		router.invalidate()
+	}
 
-    return (
-        <div className={`h-[${TOPBAR_HEIGHT}px] flex items-center justify-between px-5 py-6 bg-primary text-primary-foreground/80`}>
-            <h1 className="text-2xl font-semibold">
-                <Link to="/">Sistema Control Presupuestario</Link>
-            </h1>
+	return (
+		<div
+			className={`h-[${TOPBAR_HEIGHT}px] flex items-center justify-between px-5 py-6 bg-primary text-primary-foreground/80`}
+		>
+			<h1 className='text-2xl font-semibold'>
+				<Link to='/'>Sistema Control Presupuestario</Link>
+			</h1>
 
-            <Menubar className="flex gap-3 bg-primary">
-                <MenubarMenu>
-                    <MenubarTrigger>
-                        <UserCircleIcon size={22} />
-                    </MenubarTrigger>
+			<Menubar className='flex gap-3 bg-primary'>
+				<MenubarMenu>
+					<MenubarTrigger>
+						<UserCircleIcon size={22} />
+					</MenubarTrigger>
 
-                    <MenubarContent>
-                        <MenubarItem>
-                            <Link to="/usuarios/perfil">
-                                Perfil
-                            </Link>
-                        </MenubarItem>
-                        <MenubarItem>
-                            <Link to="/usuarios/administrar">
-                                Administrar
-                            </Link>
-                        </MenubarItem>
-                        <MenubarItem>Cambiar contraseña</MenubarItem>
-                    </MenubarContent>
-                </MenubarMenu>
+					<MenubarContent>
+						<MenubarItem>
+							<Link to='/usuarios/perfil'>Perfil</Link>
+						</MenubarItem>
+						<MenubarItem>
+							<Link to='/usuarios/administrar'>Administrar</Link>
+						</MenubarItem>
+						<MenubarItem>Cambiar contraseña</MenubarItem>
+					</MenubarContent>
+				</MenubarMenu>
 
-                <MenubarMenu>
-                    <MenubarTrigger onClick={handleLogout}>
-                        <LogOutIcon size={22} />
-                    </MenubarTrigger>
-                </MenubarMenu>
-            </Menubar>
-        </div>
-    )
+				<MenubarMenu>
+					<MenubarTrigger onClick={handleLogout}>
+						<LogOutIcon size={22} />
+					</MenubarTrigger>
+				</MenubarMenu>
+			</Menubar>
+		</div>
+	)
 }

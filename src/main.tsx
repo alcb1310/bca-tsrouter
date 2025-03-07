@@ -1,45 +1,49 @@
+import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
 import './styles.css'
-import reportWebVitals from './reportWebVitals.ts'
-import TanstackQueryProvider from "@/integrations/tanstack-query/provider";
+import TanstackQueryProvider from '@/integrations/tanstack-query/provider'
 import { QueryClient } from '@tanstack/react-query'
+import reportWebVitals from './reportWebVitals.ts'
 
 const queryClient = new QueryClient()
 // Create a new router instance
 const router = createRouter({
-    routeTree,
-    defaultPreload: 'intent',
-    scrollRestoration: true,
-    defaultStructuralSharing: true,
-    context: {
-        queryClient
-    }
+	routeTree,
+	defaultPreload: 'intent',
+	scrollRestoration: true,
+	defaultStructuralSharing: true,
+	context: {
+		queryClient,
+	},
 })
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
-    interface Register {
-        router: typeof router
-    }
+	interface Register {
+		router: typeof router
+	}
 }
 
 // Render the app
-const rootElement = document.getElementById('app')!
+const rootElement = document.getElementById('app')
+if (rootElement === null) {
+	throw new Error('Unexpected')
+}
+
 if (!rootElement.innerHTML) {
-    const root = ReactDOM.createRoot(rootElement)
-    root.render(
-        <StrictMode>
-            <TanstackQueryProvider queryClient={queryClient}>
-                <RouterProvider router={router} />
-            </TanstackQueryProvider>
-        </StrictMode>,
-    )
+	const root = ReactDOM.createRoot(rootElement)
+	root.render(
+		<StrictMode>
+			<TanstackQueryProvider queryClient={queryClient}>
+				<RouterProvider router={router} />
+			</TanstackQueryProvider>
+		</StrictMode>,
+	)
 }
 
 // If you want to start measuring performance in your app, pass a function
